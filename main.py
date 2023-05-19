@@ -2,7 +2,10 @@ import math
 
 
 def main():
-    set_loan()
+    # set_loan()
+    url = UrlFormat()
+    # print(url.get_url(input(), input()))
+
 
 
 def set_loan():
@@ -15,8 +18,8 @@ def set_loan():
 
     ans = input()
     if ans == "m":
-        month_payment = int(input("Enter the monthly payment:"))
-        num_month = principle.num_month_repay(month_payment)
+        monthly_payment = int(input("Enter the monthly payment:"))
+        num_month = principle.num_month_repay(monthly_payment)
 
         print(f"It will take {num_month} months to repay the loan") \
             if num_month > 1 else print(f"It will take {num_month} month to repay the loan")
@@ -58,9 +61,19 @@ class Calculator:
         return self.loan_stats
 
 
-main()
+class UrlFormat:
+    def __init__(self):
+        self.url = "http://example.com/{}/desirable/{}/profile"
+        self.nickname = ""
+        self.profession = ""
+
+    def get_url(self, nickname: str, profession: str):
+        self.nickname = nickname
+        self.profession = profession
+        return self.url.format(self.nickname, self.profession)
+
+
 
 
 if __name__ == '__main__':
     main()
-
