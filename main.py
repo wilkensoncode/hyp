@@ -14,8 +14,10 @@ def main():
         res = calculate(ans)
         print(res)
 
+ 
 
 def option():
+ 
     choice = 'What do you want to calculate?' \
              '\ntype "n" - for number of monthly payments,' \
              '\ntype "a" for annuity monthly payment amount,' \
