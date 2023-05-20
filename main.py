@@ -7,7 +7,6 @@ def main():
     # print(url.get_url(input(), input()))
 
 
-
 def set_loan():
     principle = Calculator(int(input("Enter the principle: ")))
 
