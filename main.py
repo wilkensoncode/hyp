@@ -2,77 +2,98 @@ import math
 
 
 def main():
-    # set_loan()
-    url = UrlFormat()
-    # print(url.get_url(input(), input()))
+    ans = option()
+
+    if ans == 'a':
+        res = calculate(ans)
+        print(res)
+    if ans == 'p':
+        res = calculate(ans)
+        print(res)
+    if ans == 'n':
+        res = calculate(ans)
+        print(res)
 
 
-
-def set_loan():
-    principle = Calculator(int(input("Enter the principle: ")))
-
+def option():
     choice = 'What do you want to calculate?' \
-             '\ntype "m" - for number of monthly payments,' \
-             '\n"p" - for the monthly payment:'
+             '\ntype "n" - for number of monthly payments,' \
+             '\ntype "a" for annuity monthly payment amount,' \
+             '\ntype "p" for loan principal:'
     print(choice)
-
-    ans = input()
-    if ans == "m":
-        monthly_payment = int(input("Enter the monthly payment:"))
-        num_month = principle.num_month_repay(monthly_payment)
-
-        print(f"It will take {num_month} months to repay the loan") \
-            if num_month > 1 else print(f"It will take {num_month} month to repay the loan")
-
-    if ans == "p":
-        num_of_month = int(input("Enter the number of months:"))
-        payment, last_payment = principle.month_payment(num_of_month)
-
-        print(f"Your monthly payment = {payment} and the last payment = {last_payment}") \
-            if payment != last_payment else print(f"Your monthly payment = {payment}")
+    return input()
 
 
-class Calculator:
-    loan_stats = {}
+def calculate(chose):
+    annuity = Annuity()
 
-    def __init__(self, principle):
-        self.principle = principle
-        self.monthly_payment = 0
-        self.month_repay = 0
+    if chose == "p":
+        annuity_pays = float(input("Enter the annuity payment:"))
+        num_periods = periods()
+        interest = interest_rate()
+        principle = annuity.calculate_principle(annuity_pays, interest, num_periods)
+        return f"Your loan principal = {math.floor(principle)}!"
 
-    def set_principle(self):
-        self.loan_stats["Loan principal"] = self.principle
+    if chose == "a":
+        principle = principle_amt()
+        months = periods()
+        interest = interest_rate()
+        monthly_payment = annuity.annuity_payment(interest, months, principle)
+        return f"Your monthly payment = {math.ceil(monthly_payment)}"
 
-    def set_monthly_payment(self, month_number: str, payment: int):
-        self.monthly_payment = payment
-        self.loan_stats[month_number] = payment
-
-    def num_month_repay(self, monthly_payment):
-        self.month_repay = math.ceil(self.principle / monthly_payment)
-        return self.month_repay
-
-    def month_payment(self, month):
-        monthly_pay = math.ceil(self.principle / month)
-        last_pay = self.principle - (month - 1) * math.ceil(monthly_pay)
-        return monthly_pay, last_pay
-
-    def get_stats(self):
-        set_loan()
-        return self.loan_stats
+    if chose == "n":
+        principle = principle_amt()
+        payment = int(input("Enter the monthly payment:"))
+        interest = interest_rate()
+        monthly_payment = annuity.num_payments(principle, payment, interest)
+        month = math.ceil(monthly_payment)
+        if month % 12 == 0:
+            return f'It will take {month // 12} years months to repay this loan!'
+        else:
+            return f'It will take {month // 12} years and {month % 12} months to repay this loan!'
 
 
-class UrlFormat:
+# helper methods
+def periods():
+    months = int(input("Enter the number of periods:"))
+    return months
+
+
+def interest_rate():
+    interest = float(input("Enter the loan interest:"))
+    return interest
+
+
+def principle_amt():
+    principle = float(input("Enter the loan principal:"))
+    return principle
+
+
+class Annuity:
     def __init__(self):
-        self.url = "http://example.com/{}/desirable/{}/profile"
-        self.nickname = ""
-        self.profession = ""
+        self.interest = 0
 
-    def get_url(self, nickname: str, profession: str):
-        self.nickname = nickname
-        self.profession = profession
-        return self.url.format(self.nickname, self.profession)
+    def annuity_payment(self, interest, month, principle):
+        self.interest_calc(interest)
+        annuity = principle * (
+                (self.interest * ((1 + self.interest) ** month)) / ((1 + self.interest) ** month - 1))
+        return annuity  # monthly payment
 
+    def interest_calc(self, interest):  # helper method
+        self.interest = (interest / 100) / (12 * (100 / 100))
 
+    def calculate_principle(self, annuity, interest, month):
+        self.interest_calc(interest)
+        principle = annuity / (
+                (self.interest * (1 + self.interest) ** month) / (
+                (1 + self.interest) ** month - 1))
+        return principle
+
+    def num_payments(self, principle, annuity, interest):
+        self.interest_calc(interest)
+        num_payment = annuity / (annuity - (self.interest * principle))
+        num_month = math.log(num_payment, 1 + self.interest)
+        return num_month
 
 
 if __name__ == '__main__':
