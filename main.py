@@ -76,7 +76,7 @@ def annuity_calculate(principal, period, interest):
     payment = Payment()
     args: Namespace = parser.parse_args()
     if args.type == "annuity":
-        annuity_pay = payment.annuity_payments(int(principal), int(period), int(interest))
+        annuity_pay = payment.annuity_payments(int(principal), int(period), interest)
         pay = math.ceil(annuity_pay)  # annuity payment
         overpay = int(period) * pay - int(principal)
         return pay, overpay
@@ -85,7 +85,7 @@ def annuity_calculate(principal, period, interest):
 def principal_calculate(annuity, interest, month):
     payment = Payment()
     principal, overpay = payment.principle_loan(annuity, interest, month)
-    return principal, overpay
+    return principal, math.ceil(overpay)
 
 
 def payment_length_calculate(principal, payment, interest):
