@@ -1,17 +1,15 @@
 def main():
-    board = process_input('_O_X__X_X')
+    board = process_input('XOXOOXXXO')
     print_board(board)
+
     if is_full(board) and not is_winner(board):
-        print(is_impossible(board))
-        print("draw")
-    elif not is_impossible(board) and is_winner(board):
-        print(is_winner(board))
-        print("Impossible")
+        print("Draw")
     elif is_winner(board) and is_winner(board):
         print(f"{is_winner(board)} wins")
-    elif not is_full(board) or is_impossible(board):
-        print(is_winner(board))
+    elif not is_full(board) and not is_winner(board) and not is_impossible(board):
         print("Game not finished")
+    elif is_impossible(board) or is_impossible(board) and is_winner(board):
+        print("Impossible")
 
 
 def is_full(board: list):
@@ -27,6 +25,11 @@ def is_impossible(board: list):
     diff = abs(count_O - count_x)
     if diff >= 2:
         return True
+
+    for col in range(len(board)):
+        if board[0][col] == board[1][col] == board[2][col] and board[0][col] != '_':
+            return True
+
     return False
 
 
@@ -37,6 +40,7 @@ def incomplete_game(board: list):
 
     wins_x = is_winner(board) == "X"
     wins_O = is_winner(board) == "O"
+    # print(wins_O, wins_x)
 
     if wins_x == wins_O or diff <= 1:
         return True
