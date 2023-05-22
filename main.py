@@ -1,15 +1,101 @@
 def main():
-    board = process_input('XOXOOXXXO')
+    board = process_input('_XXOO_OX_')
     print_board(board)
+    play_game(board)
 
-    if is_full(board) and not is_winner(board):
-        print("Draw")
-    elif is_winner(board) and is_winner(board):
-        print(f"{is_winner(board)} wins")
-    elif not is_full(board) and not is_winner(board) and not is_impossible(board):
-        print("Game not finished")
-    elif is_impossible(board) or is_impossible(board) and is_winner(board):
-        print("Impossible")
+    # if is_full(board) and not is_winner(board):
+    #     print("Draw")
+    # elif is_winner(board) and is_winner(board):
+    #     print(f"{is_winner(board)} wins")
+    # elif not is_full(board) and not is_winner(board) and not is_impossible(board):
+    #     print("Game not finished")
+    # elif is_impossible(board) or is_impossible(board) and is_winner(board):
+    #     print("Impossible")
+
+
+def play_game(board: list):
+    msg_taken = "This cell is occupied! Choose another one!"
+    msg_wrong_input = "You should enter numbers!"
+
+    while True:
+        pos_row, pos_col = input().split()
+        if not pos_col.isnumeric() and not pos_row.isnumeric():
+            print(msg_wrong_input)
+        pos_row = int(pos_row)
+        pos_col = int(pos_col)
+        if int(pos_row) == int(pos_col) == 1:
+            if board[0][0] != "_":
+                print(msg_taken)
+            else:
+                board[0][0] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 1 and int(pos_col) == 2:
+
+            if board[0][1] != "_":
+                print(msg_taken)
+            else:
+                board[0][1] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 1 and int(pos_col) == 3:
+
+            if board[0][2] != "_":
+                print(msg_taken)
+            else:
+                board[0][2] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 2 and int(pos_col) == 1:
+
+            if board[1][0] != "_":
+                print(msg_taken)
+            else:
+                board[1][0] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == int(pos_col) == 2:
+
+            if board[1][1] != "_":
+                print(msg_taken)
+            else:
+                board[1][1] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 2 and int(pos_col) == 3:
+
+            if board[1][2] != "_":
+                print(msg_taken)
+            else:
+                board[1][2] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 3 and int(pos_col) == 1:
+
+            if board[2][0] != "_":
+                print(msg_taken)
+            else:
+                board[2][0] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == 3 and int(pos_col) == 2:
+
+            if board[2][1] != "_":
+                print(msg_taken)
+            else:
+                board[2][1] = 'X'
+                print_board(board)
+                break
+        elif int(pos_row) == int(pos_col) == 3:
+
+            if board[2][2] != "_":
+                print(msg_taken)
+            else:
+                board[2][2] = 'X'
+                print_board(board)
+                break
+        else:
+            print("Coordinates should be from 1 to 3!")
 
 
 def is_full(board: list):
@@ -40,7 +126,6 @@ def incomplete_game(board: list):
 
     wins_x = is_winner(board) == "X"
     wins_O = is_winner(board) == "O"
-    # print(wins_O, wins_x)
 
     if wins_x == wins_O or diff <= 1:
         return True
@@ -69,7 +154,7 @@ def is_winner(board: list):
         return winners[0]
     elif winner > 1:
         return False  # impossible game
-    return False
+    return False  # draw
 
 
 def print_board(board: list):
