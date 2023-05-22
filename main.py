@@ -16,86 +16,23 @@ def main():
 def play_game(board: list):
     msg_taken = "This cell is occupied! Choose another one!"
     msg_wrong_input = "You should enter numbers!"
+    coord_msg = "Coordinates should be from 1 to 3!"
 
     while True:
         pos_row, pos_col = input().split()
         if not pos_col.isnumeric() and not pos_row.isnumeric():
             print(msg_wrong_input)
-        pos_row = int(pos_row)
-        pos_col = int(pos_col)
-        if int(pos_row) == int(pos_col) == 1:
-            if board[0][0] != "_":
-                print(msg_taken)
-            else:
-                board[0][0] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 1 and int(pos_col) == 2:
-
-            if board[0][1] != "_":
-                print(msg_taken)
-            else:
-                board[0][1] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 1 and int(pos_col) == 3:
-
-            if board[0][2] != "_":
-                print(msg_taken)
-            else:
-                board[0][2] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 2 and int(pos_col) == 1:
-
-            if board[1][0] != "_":
-                print(msg_taken)
-            else:
-                board[1][0] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == int(pos_col) == 2:
-
-            if board[1][1] != "_":
-                print(msg_taken)
-            else:
-                board[1][1] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 2 and int(pos_col) == 3:
-
-            if board[1][2] != "_":
-                print(msg_taken)
-            else:
-                board[1][2] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 3 and int(pos_col) == 1:
-
-            if board[2][0] != "_":
-                print(msg_taken)
-            else:
-                board[2][0] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == 3 and int(pos_col) == 2:
-
-            if board[2][1] != "_":
-                print(msg_taken)
-            else:
-                board[2][1] = 'X'
-                print_board(board)
-                break
-        elif int(pos_row) == int(pos_col) == 3:
-
-            if board[2][2] != "_":
-                print(msg_taken)
-            else:
-                board[2][2] = 'X'
-                print_board(board)
-                break
         else:
-            print("Coordinates should be from 1 to 3!")
+            pos_row = int(pos_row)
+            pos_col = int(pos_col)
+            if pos_row > 3 or pos_col > 3:
+                print(coord_msg)
+            elif board[pos_row - 1][pos_col - 1] == "_":
+                board[pos_row - 1][pos_col - 1] = 'X'
+                print_board(board)
+                break
+            else:
+                print(msg_taken)
 
 
 def is_full(board: list):
