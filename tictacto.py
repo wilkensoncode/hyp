@@ -93,4 +93,4 @@ def print_board(board: list):
     print("---------")
 
 
-tictacto()
+# tictacto()
