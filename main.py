@@ -5,7 +5,7 @@ from tictacto import tictacto
 
 def main():
 # tictacto()
-    lazzynum.p()
+    lazzynum
 
 if __name__ == '__main__':
     main()
