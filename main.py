@@ -1,11 +1,7 @@
-import lazzynum
-from tictacto import tictacto
-
-
 
 def main():
-# tictacto()
-    lazzynum
+    pass
+
 
 if __name__ == '__main__':
     main()
