@@ -1,33 +1,37 @@
 import random
 
 
-def main():
-    print("H A N G M A N\nThe game will be available soon.")  # stage 1
-
-    print("H A N G M A N")  # stage 2
-    # guess = input("Guess the word:")
-    # print("You survived!" if guess == "python" else "You lost!")
-
-    # stage 3
-    print("H A N G M A N")
-    lst = ['python', 'java', 'swift', 'javascript']
-    choice = random.choice(lst)
-
-    guess = input(f"Guess the word {show_hint(choice)}:")
-    print("You survived!" if guess == choice else "You lost!")
+def hangman_guess():
+    word_choice = ['python', 'java', 'swift', 'javascript']
+    choice = random.choice(word_choice)
+    attempt_guess(choice)
 
 
-# stage 4
-def show_hint(word: str):
-    w = []
-    for i in range(3):
-        w.append(word[i])
+def attempt_guess(word: str):
+    attempts = 8
+    print(f"H A N G M A N")
+    res = ['-'] * len(word)  # initialize array with dashes
+    print(''.join(res))
 
-    for i in range(len(word) - 3):
-        while len(w) < len(word):
-            w.append('-')
+    guess = input(f"Input a letter: ")
+    while attempts > 0:
+        if guess in word:
+            for i in range(len(word)):
+                if word[i] == guess:
+                    res[i] = guess
+        else:
+            print(f"That letter doesn't appear in the word")
 
-    return "".join(w)
+        attempts -= 1
+        if '-' not in res:
+            print(''.join(res))
+            print("Thanks for playing!")
+            break
+        print(''.join(res))
+        if attempts == 0:
+            print("Thanks for playing!")
+            break
+        guess = input(f"Input a letter: ")
 
 
-main()
+hangman_guess()
