@@ -2,7 +2,8 @@ import random
 
 
 def hangman():
-    word_choice = ['python', 'java', 'swift', 'javascript']
+    # 'python', 'javascript', 'swift',
+    word_choice = ['java']
     choice = random.choice(word_choice)
     dont_die(choice)
 
@@ -16,7 +17,11 @@ def dont_die(word: str):
 
     guess = input(f"Input a letter: ")
     while attempts > 0:
-        if guess in word and guess not in guessed:
+        if not guess.islower() and len(guess) == 1:
+            print("Please, enter a lowercase letter from the English alphabet.")
+        elif len(guess) != 1:
+            print("Please, input a single letter.")
+        elif guess in word and guess not in guessed:
             for i in range(len(word)):
                 if word[i] == guess:
                     res[i] = guess
@@ -24,15 +29,14 @@ def dont_die(word: str):
 
         else:
             if guess in guessed:
-                attempts -= 1
-                print(f"No improvements.")
+                print("You've already guessed this letter.")
             else:
                 attempts -= 1
-                print(f"That letter doesn't appear in the word")
+                print(f"That letter doesn't appear in the word.")
+            guessed.append(guess)
 
         if '-' not in res:
-            print(''.join(res))
-            print("You guessed the word!")
+            print(f"You guessed the word {''.join(res)}!")
             print("You survived!")
             break
 
