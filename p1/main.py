@@ -1,6 +1,8 @@
+import os
+
 
 def main():
-    pass
+    print(os.getcwd())
 
 
 if __name__ == '__main__':
