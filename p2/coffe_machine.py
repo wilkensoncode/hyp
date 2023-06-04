@@ -1,35 +1,52 @@
-class CoffeeMachine:
-	# region Constants
-	STATUS_STARTING = "starting"
-	STATUS_GRINDING = "grinding"
-	STATUS_BOILING = "boiling"
-	STATUS_MIXING = "mixing"
-	STATUS_POURING_WATER = "pouring_water"
-	STATUS_POURING_MILK = "pouring_milk"
-	STATUS_READY = "ready"
+def main():
+    make_coffe = CoffeMachine()
 
-	ALL_STATUSES = [STATUS_STARTING, STATUS_GRINDING, STATUS_BOILING, STATUS_MIXING,
-	                STATUS_POURING_WATER, STATUS_POURING_MILK, STATUS_READY]
+    # print ingredient needed for x cup of coffe
 
-	repr_status = {
-		"starting": "Starting to make a coffee",
-		"grinding": "Grinding coffee beans",
-		"boiling": "Boiling water",
-		"mixing": "Mixing boiled water with crushed coffee beans",
-		"pouring_water": "Pouring coffee into the cup",
-		"pouring_milk": "Pouring some milk into the cup",
-		"ready": "Coffee is ready!"
-	}
+    num_cup_coffe = int(input("Write how many cups of coffee you will need:\n "))
+    print(f"for {num_cup_coffe} cups of coffee you will need:")
 
-	# endregion
+    amount_water, amount_milk, amount_beans = make_coffe.ingredient(num_cup_coffe)
 
-	def __init__(self):
-		pass
+    print(f"{amount_water} ml of water")
+    print(f"{amount_milk} ml of milk")
+    print(f"{amount_beans} g of coffee beans")
 
-	def show_statuses(self):
-		for i in CoffeeMachine.ALL_STATUSES:
-			print(CoffeeMachine.repr_status[i])
+    #  Inventory determine if machine can make needed coffe
+
+    water = int(input("Write how many ml of water the coffee machine has:\n"))
+    milk = int(input("Write how many ml of milk the coffee machine has:\n"))
+    beans = int(input("Write how many grams of coffee beans the coffee machine has:\n"))
+    cups = int(input("Write how many cups of coffee you will need:\n"))
+    answer = make_coffe.inventory(water, milk, beans, cups)
+    print(answer)
 
 
-machine = CoffeeMachine()
-machine.show_statuses()
+class CoffeMachine:
+    def __init__(self):
+        self.water = 200
+        self.milk = 50
+        self.beans = 15
+
+    def ingredient(self, num_cups):  # ingredient needed to make 25 cups coffee
+        water = self.water * num_cups
+        milk = self.milk * num_cups
+        beans = self.beans * num_cups
+        return water, milk, beans
+
+    def inventory(self, water, milk, beans, cup):  # can coffe be made
+
+        w = water // self.water
+        m = milk // self.milk
+        b = beans // self.beans
+        max_c = min(w, m, b)
+        ms = f"No, I can make only {max_c} cups of coffee"
+        if cup == max_c:
+            ms = "Yes, I can make that amount of coffee"
+        elif cup < max_c:
+            ms = f"Yes, I can make that amount of coffee (and even {max_c - cup} more than that)"
+
+        return ms
+
+
+main()
