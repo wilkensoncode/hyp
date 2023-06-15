@@ -32,7 +32,8 @@ def bus_info():
 			transfer_stops.append(name)
 
 	transfer_stops.sort()
-	arrive_time(entries_by_bus, transfer_stops, start_stops, finish_stops)
+	# arrive_time(entries_by_bus, transfer_stops, start_stops, finish_stops)
+	check_on_demand_stops(data, start_stops, finish_stops, transfer_stops)
 
 
 def arrive_time(entries_by_bus, transfer_stops, start_stops, finish_stops):
@@ -52,6 +53,22 @@ def arrive_time(entries_by_bus, transfer_stops, start_stops, finish_stops):
 	else:
 		for arrival in incorrect_arrivals:
 			print(arrival)
+
+
+def check_on_demand_stops(data, start_stop, fin_stop, transfer_stops):
+	on_demand_stops = []
+	for d in data:
+		if d["stop_type"] == "O" and d["stop_name"] in start_stop \
+				or d["stop_type"] == "O" and d["stop_name"] in fin_stop \
+				or d["stop_type"] == "O" and d["stop_name"] in transfer_stops:
+			on_demand_stops.append(d["stop_name"])
+
+	on_demand_stops.sort()
+	if len(on_demand_stops) > 0:
+		print("On demand stops test:")
+		print("Wrong stop type:", on_demand_stops)
+	else:
+		print("OK")
 
 
 bus_info()
