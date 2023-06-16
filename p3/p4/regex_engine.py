@@ -108,8 +108,28 @@ def check_caret(regex, string):
     return compare(regex[1:], string) if regex.startswith('^') else change_pos(regex, string)
 
 
-def main():
-    data = input().split('|')
-    print(check_caret(*data))
+# def main():
+#     data = input().split('|')
+#     print(check_caret(*data))
+
+
+# class ComplexNumber:
+#     def __init__(self, real_part, im_part):
+#         self.real_part = real_part
+#         self.im_part = im_part
+#
+#     # other magic methods we've already defined
+#
+#     def __iadd__(self, other):
+#         """Addition with assignment (+=) for complex numbers."""
+#         self.real_part += other.real_part
+#         self.im_part += other.im_part
+#         return self
+#
+# z1 = ComplexNumber(8, -3)
+# z2 = ComplexNumber(-6, 2)
+#
+# z1 += z2
+# print(z1.real_part, z1.im_part, z1)
 
 
