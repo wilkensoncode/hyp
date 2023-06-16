@@ -1,6 +1,5 @@
-import re
+from p3 import bus
 
-regexp = '..ever gonna'
-string = '\\'
-result = re.match(r"\\", string)
-print(result)
+if __name__ == '__main__':
+    # bus.bus_info()
+    pass
